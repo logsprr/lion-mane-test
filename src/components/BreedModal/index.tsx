@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useDispatch } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import {
   Dialog,
@@ -12,25 +12,16 @@ import {
   useTheme,
 } from '@mui/material';
 import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 
-import { BreedCardProps, BreedModalProps, BreedParamsProps } from 'interfaces';
+import { BreedModalProps, BreedParamsProps } from 'interfaces';
 
-import {
-  getAllImagesSubBreed,
-  getImageBreed,
-  getImageSubBreed,
-} from 'services/imageBreed';
+import { getAllImagesSubBreed } from 'services/imageBreed';
 
 import { setFavoriteSubBreed } from 'store/modules/breed/actions';
 
 import { capitalizeString } from 'utils';
 
-const BreedModal = ({ subBreedName }: BreedModalProps) => {
+const BreedModal = ({ subBreedName, isFavBreedName }: BreedModalProps) => {
   const { breedName }: BreedParamsProps = useParams();
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -47,13 +38,19 @@ const BreedModal = ({ subBreedName }: BreedModalProps) => {
   };
 
   const setFavorite = () => {
-    dispatch(setFavoriteSubBreed(breedName, subBreedName));
+    if (isFavBreedName) {
+      dispatch(setFavoriteSubBreed(isFavBreedName, subBreedName));
+    } else {
+      dispatch(setFavoriteSubBreed(breedName, subBreedName));
+    }
     setOpen(false);
   };
 
   React.useEffect(() => {
     const getImages = async () => {
-      const response = await getAllImagesSubBreed(breedName, subBreedName);
+      const response = isFavBreedName
+        ? await getAllImagesSubBreed(isFavBreedName, subBreedName)
+        : await getAllImagesSubBreed(breedName, subBreedName);
 
       setImages(response.data.message);
     };
@@ -61,7 +58,10 @@ const BreedModal = ({ subBreedName }: BreedModalProps) => {
     if (subBreedName !== 'none') {
       getImages();
     }
-  }, [breedName, subBreedName]);
+    return () => {
+      setImages([]);
+    };
+  }, [breedName, isFavBreedName, subBreedName]);
 
   return (
     <div>

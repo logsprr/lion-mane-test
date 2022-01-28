@@ -1,17 +1,19 @@
+import { Typography } from '@mui/material';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
 
-export default function Loading() {
+const NoData = () => {
   return (
     <Box
       sx={{
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        height: '80vh',
       }}
     >
-      <CircularProgress />
+      <Typography>No data!</Typography>
     </Box>
   );
-}
+};
+
+export default NoData;

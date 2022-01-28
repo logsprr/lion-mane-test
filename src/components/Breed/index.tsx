@@ -24,7 +24,7 @@ const BreedCard = ({ name, isSub, subBreedName }: BreedCardProps) => {
   React.useEffect(() => {
     const getImage = async () => {
       if (subBreedName) {
-        const response = await getImageSubBreed(name, subBreedName);
+        const response = await getImageSubBreed(subBreedName, name);
 
         setImage(response.data.message);
       } else {
@@ -51,8 +51,8 @@ const BreedCard = ({ name, isSub, subBreedName }: BreedCardProps) => {
       </CardContent>
       {name !== 'none' && (
         <CardActions>
-          {isSub ? (
-            <BreedModal subBreedName={name} />
+          {isSub || subBreedName ? (
+            <BreedModal subBreedName={name} isFavBreedName={subBreedName} />
           ) : (
             <Button size="small" onClick={() => history.push(`/breed/${name}`)}>
               Learn More

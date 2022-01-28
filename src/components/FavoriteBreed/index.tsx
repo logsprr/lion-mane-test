@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Grid } from '@mui/material';
 
 import { FavoriteBreedProps } from 'interfaces';
@@ -17,7 +15,10 @@ const FavoriteBreed = ({ breed }: FavoriteBreedProps) => {
         display="flex"
       >
         {breed && (
-          <BreedCard name={breed?.name} subBreedName={breed?.subBreedName} />
+          <BreedCard
+            name={breed?.subBreedName || breed?.name}
+            subBreedName={breed?.name}
+          />
         )}
         {!breed && <BreedCard name="none" />}
       </Grid>

@@ -30,6 +30,7 @@ export interface BreedCardProps extends Breed {
 
 export interface BreedModalProps {
   subBreedName: string;
+  isFavBreedName?: string;
 }
 
 export interface ListBreedsProps {

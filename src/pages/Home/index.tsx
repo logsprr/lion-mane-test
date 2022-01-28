@@ -4,9 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
 import FavoriteBreed from 'components/FavoriteBreed';
-import Header from 'components/Header';
 import ListBreeds from 'components/ListBreeds';
 import Loading from 'components/Loading';
+import NoData from 'components/NoData';
 
 import { SelectorStateProps } from 'interfaces';
 
@@ -33,7 +33,11 @@ const Home = () => {
           <Typography variant="h4">Favorite Breed</Typography>
           <FavoriteBreed breed={breed} />
           <Typography variant="h4">Breeds</Typography>
-          <ListBreeds breeds={breeds} isSub={false} />
+          {breeds.length ? (
+            <ListBreeds breeds={breeds} isSub={false} />
+          ) : (
+            <NoData />
+          )}
         </>
       )}
     </Container>

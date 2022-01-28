@@ -4,9 +4,9 @@ import { useParams } from 'react-router';
 
 import { capitalize, Typography } from '@mui/material';
 
-import FavoriteBreed from 'components/FavoriteBreed';
 import ListBreeds from 'components/ListBreeds';
 import Loading from 'components/Loading';
+import NoData from 'components/NoData';
 
 import { BreedParamsProps, SelectorStateProps } from 'interfaces';
 
@@ -28,7 +28,13 @@ const Breed = () => {
   return (
     <Container>
       <Typography variant="h4">{`${capitalize(breedName)} Breeds`}</Typography>
-      {isLoading ? <Loading /> : <ListBreeds breeds={subBreeds} isSub />}
+      {isLoading ? (
+        <Loading />
+      ) : subBreeds.length ? (
+        <ListBreeds breeds={subBreeds} isSub />
+      ) : (
+        <NoData />
+      )}
     </Container>
   );
 };
