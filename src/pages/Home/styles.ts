@@ -2,5 +2,7 @@ import { Button, TextField } from '@mui/material';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  height: 95vh;
+  height: 100vh;
+  padding: 16px;
+  margin-top: 64px;
 `;

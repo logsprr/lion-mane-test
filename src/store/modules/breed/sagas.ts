@@ -11,13 +11,33 @@ export function* findAllEffect() {
   try {
     const response: AxiosResponse = yield call(api.get, `/breeds/list/all`);
     yield put({
-      type: '@pedidos/BROWSE_SUCCESS',
-      payload: { items: response.data },
+      type: '@breed/LIST_ALL_SUCCESS',
+      payload: { breeds: response.data },
     });
   } catch (error) {
     toast.error('Error in get breeds!');
-    yield put({ type: '@breed/LIST_ALL_SUCCESS' });
+    yield put({ type: '@breed/LIST_ALL_ERROR' });
   }
 }
 
-export default all([takeLatest('@breed/LIST_ALL', findAllEffect)]);
+export function* findAllSubEffect(action: ActionProps) {
+  const { breedName } = action.payload;
+  try {
+    const response: AxiosResponse = yield call(
+      api.get,
+      `/breed/${breedName}/list`
+    );
+    yield put({
+      type: '@breed/LIST_ALL_SUCCESS_SUB',
+      payload: { breeds: response.data },
+    });
+  } catch (error) {
+    toast.error('Error in get breeds!');
+    yield put({ type: '@breed/LIST_ALL_ERROR' });
+  }
+}
+
+export default all([
+  takeLatest('@breed/LIST_ALL', findAllEffect),
+  takeLatest('@breed/LIST_ALL_SUB', findAllSubEffect),
+]);
