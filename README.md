@@ -1,10 +1,10 @@
 # LionMane Test React
 
-This is a React App to explore different Breeds, and is hosted in Google Cloud using Cloud Functions to host.
+This is a React App to explore different Breeds.
 
 ## Urls
 
-- Staging: url
+- develoment: http://localhost:3000
 
 ## Usage
 
